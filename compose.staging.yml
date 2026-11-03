@@ -1,0 +1,138 @@
+name: medknowledge-recruitment
+
+x-logging: &bounded-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+x-backend-common: &backend-common
+  image: medknowledge-backend:${RELEASE_TAG:-recruitment-20261027}
+  build:
+    context: ./backend
+  env_file:
+    - ${DEPLOY_ENV_FILE:-./deploy/staging.env}
+  environment:
+    DATABASE_URL: postgresql+psycopg://medknowledge:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in deploy/staging.env}@db:5432/postgres
+    MD_STORAGE_PATH: /app/storage/md
+    BACKUP_ROOT: /app/backups
+    BACKUP_PG_CONTAINER: ""
+    TIKA_SERVER_URL: http://tika:9998
+  volumes:
+    - knowledge_storage:/app/storage
+    - knowledge_backups:/app/backups
+    - knowledge_restores:/app/restores
+    - bootstrap_credentials:/app/.credentials
+    - ./backend/data/public_manuals:/app/data/public_manuals:ro
+  networks:
+    - internal
+  logging: *bounded-logging
+  depends_on:
+    db:
+      condition: service_healthy
+
+services:
+  db:
+    image: pgvector/pgvector:0.8.7-pg17-bookworm
+    environment:
+      POSTGRES_USER: medknowledge
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in deploy/staging.env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - internal
+    logging: *bounded-logging
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medknowledge -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  tika:
+    image: apache/tika:3.2.3.0
+    networks:
+      - internal
+    mem_limit: 512m
+    logging: *bounded-logging
+    restart: unless-stopped
+
+  # Deliberately manual: never migrate a database during an automatic restart.
+  migrate:
+    <<: *backend-common
+    profiles: ["maintenance"]
+    command: ["sh", "-ec", "python -m scripts.deploy_preflight && python -m scripts.init_db && python -m scripts.bootstrap_admin --generate"]
+    restart: "no"
+
+  api:
+    <<: *backend-common
+    depends_on:
+      db:
+        condition: service_healthy
+      tika:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8010/ready', timeout=3)"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+  index-worker:
+    <<: *backend-common
+    command: ["python", "-m", "app.worker", "--queue", "index"]
+    depends_on:
+      db:
+        condition: service_healthy
+      tika:
+        condition: service_started
+    restart: unless-stopped
+
+  quality-worker:
+    <<: *backend-common
+    command: ["python", "-m", "app.worker", "--queue", "quality"]
+    restart: unless-stopped
+
+  ops:
+    <<: *backend-common
+    command: ["python", "-m", "app.ops_agent"]
+    restart: unless-stopped
+
+  precheck-worker:
+    <<: *backend-common
+    command: ["python", "-m", "app.precheck_worker"]
+    restart: unless-stopped
+
+  web:
+    image: medknowledge-web:${RELEASE_TAG:-recruitment-20261027}
+    build:
+      context: ./frontend
+    ports:
+      - "127.0.0.1:${HTTP_PORT:-8090}:80"
+    networks:
+      - internal
+    logging: *bounded-logging
+    depends_on:
+      api:
+        condition: service_started
+    healthcheck:
+      # Verify the proxy can still reach the API, not just that NGINX is alive.
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/api/ready"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+networks:
+  internal:
+
+volumes:
+  postgres_data:
+  knowledge_storage:
+  knowledge_backups:
+  knowledge_restores:
+  bootstrap_credentials:

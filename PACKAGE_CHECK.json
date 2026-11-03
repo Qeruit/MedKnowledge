@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-10-27",
+  "sourcePackage": "MedKnowledge_Source_20261027",
+  "forbiddenPathFindings": 0,
+  "configuredCredentialMatches": 0,
+  "privateKeyAndCommonTokenFindings": 0,
+  "includedFrontendTests": 21,
+  "pythonFilesSyntaxChecked": 119,
+  "frontendBuild": "passed; Docker build-stage tests 21 passed and final nginx image built",
+  "composeTemplate": "passed",
+  "dockerImages": "backend and frontend built from exported source; dependency checks passed",
+  "backendSuite": "128 passed; 53 skipped; isolated temporary PostgreSQL",
+  "agentSuite": "23 passed separately; overlaps full-suite unit cases",
+  "temporaryTestResources": "databases, PostgreSQL container and isolated network removed",
+  "realModelAndBrowserRetest": "not run; receiver supplies credentials",
+  "sourceProjectModified": false,
+  "note": "Test fixtures may contain explicitly synthetic passwords; no configured real credentials or private databases included. This is a packaging check, not a security certification."
+}

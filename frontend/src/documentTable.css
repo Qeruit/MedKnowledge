@@ -1,0 +1,79 @@
+/* Keep document operations reachable without browser zoom or page-wide overflow. */
+.review-feedback { position: fixed; top: 16px; right: 24px; z-index: 1000; max-width: min(540px, calc(100vw - 48px)); padding: 14px 42px 14px 16px; border: 1px solid #81c5b7; border-radius: 10px; background: #edf9f4; color: #205d4e; box-shadow: 0 4px 18px #102d4426; overflow-wrap: anywhere; }
+.review-feedback-error { background: #fff0ed; border-color: #edb0a4; color: #9c3220; }
+.review-feedback button { position: absolute; right: 10px; top: 8px; background: transparent; border: 0; cursor: pointer; font-size: 22px; }
+.main-panel { min-height: 0; }
+.topbar { flex-shrink: 0; }
+.admin-screen {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.document-table-hint { margin: 8px 0; color: #637788; font-size: 12px; }
+.documents-table-wrap {
+  --document-actions-width: 272px;
+  width: 100%;
+  max-width: 100%;
+  max-height: clamp(240px, 62vh, 680px);
+  position: relative;
+  isolation: isolate;
+  overflow-x: scroll;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  scrollbar-color: #8caaa8 #edf3f5;
+  overscroll-behavior-x: contain;
+}
+.documents-table-wrap:focus-visible { outline: 2px solid #118b7d; outline-offset: 3px; }
+.documents-table-wrap::-webkit-scrollbar { width: 12px; height: 12px; }
+.documents-table-wrap::-webkit-scrollbar-track { background: #edf3f5; }
+.documents-table-wrap::-webkit-scrollbar-thumb { background: #8caaa8; border: 3px solid #edf3f5; border-radius: 8px; }
+.document-table {
+  min-width: calc(1112px + var(--document-actions-width));
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.document-col-name { width: 280px; }
+.document-col-size { width: 88px; }
+.document-col-status { width: 152px; }
+.document-col-access { width: 152px; }
+.document-col-date { width: 160px; }
+.document-col-remark { width: 280px; }
+.document-col-actions { width: var(--document-actions-width); }
+.document-table th { position: sticky; top: 0; z-index: 3; }
+.document-table td { background: white; overflow-wrap: anywhere; line-height: 1.5; }
+.document-table td small { line-height: 1.5; }
+.document-table .document-date { white-space: nowrap; font-size: 12px; font-variant-numeric: tabular-nums; }
+.document-table td.remark { max-width: none; }
+.remark-preview { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+.remark-details { margin-top: 6px; }
+.remark-details summary { color: #167f73; cursor: pointer; }
+.remark-details p { white-space: pre-wrap; overflow-wrap: anywhere; margin: 8px 0 0; }
+.document-table .document-actions-cell {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  background: white;
+  white-space: normal;
+  box-shadow: -7px 0 10px -9px #355a72;
+  border-left: 1px solid #e0e7ec;
+}
+.document-table th.document-actions-cell { top: 0; z-index: 4; background: #f8fbfc; }
+.document-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 6px; }
+.document-actions button { min-height: 32px; text-align: left; white-space: normal; border-radius: 6px; }
+.document-actions button:hover { background: #eaf5f2; }
+.document-actions .document-audit-action { background: #e4f3ef; font-weight: 600; }
+.document-table .action-file-id { margin: 0 0 6px; color: #637788; font-size: 11px; }
+@media (min-width: 801px) {
+  .app-shell { height: 100dvh; min-height: 0; overflow: hidden; }
+  .sidebar { min-height: 0; overflow-y: auto; }
+  .main-panel { height: 100%; }
+}
+@media (max-width: 800px) {
+  .documents-table-wrap { --document-actions-width: 224px; }
+  .document-table .document-actions-cell { padding: 10px 8px; }
+  .document-actions { gap: 4px; }
+  .document-actions button { font-size: 12px; }
+}

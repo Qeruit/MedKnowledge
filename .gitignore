@@ -1,0 +1,45 @@
+backend/.env
+backend/.env.local
+backend/.env.*
+!backend/.env.example
+backend/.credentials/
+backend/.venv/
+**/.idea/
+**/.vscode/
+backend/**/__pycache__/
+backend/.pytest_cache/
+backend/storage/
+backend/backups/
+backend/restores/
+backend/logs/
+backend/tmp/
+backend/data/public_manuals/*.pdf
+backend/data/lifecycle_test_only.md
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+deploy/staging.env
+deploy/*.env
+!deploy/*.env.example
+deploy/tls/
+/-*.png
+# 根目录环境变量
+.env
+.env.*
+!.env.example
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 本地数据库
+*.db
+*.sqlite3
+
+# 日志
+*.log
+
+# 项目压缩包
+MedKnowledge.zip

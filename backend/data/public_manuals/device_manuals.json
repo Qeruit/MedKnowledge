@@ -1,0 +1,29 @@
+[
+  {
+    "file": "AccelStim_RevAB_2026.pdf",
+    "title": "Orthofix AccelStim Bone Healing Therapy Instructional Manual",
+    "sourceUrl": "https://orthofix.com/wp-content/uploads/2022/10/AccelStim-Device-Patient-Manual-Rev-AB-2026.pdf",
+    "revisionLabel": "Orthofix Rev AB (2026)",
+    "language": "English",
+    "pdfPages": 72,
+    "sha256": "c3fa82d25e335dc9beb39f371b9c47984812936029b00dbe5cb7a4c8ab03bb40"
+  },
+  {
+    "file": "MiniMed_780G_SimpleraSync_zh.pdf",
+    "title": "MiniMed 780G Simplera Sync 系统用户指南",
+    "sourceUrl": "https://origin.medtronicdiabetes.com/sites/default/files/library/download-library/user-guides/minimed-780g-simplera-sync-%E6%8E%A2%E5%A4%B4-%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97.pdf",
+    "revisionLabel": "MiniMed 780G Simplera Sync 中文版 (2025)",
+    "language": "Chinese",
+    "pdfPages": 363,
+    "sha256": "89d5b38640f874d76e8fa6cb5d12c9a4687aadeaa1a6cefd7a04912ad9c315b3"
+  },
+  {
+    "file": "Tandem_tslimX2_ControlIQ_7.8.1_en.pdf",
+    "title": "Tandem t:slim X2 Control-IQ 7.8.1 User Guide (Canada)",
+    "sourceUrl": "https://assets.ctfassets.net/k5s5iz8jouwn/1Fhfp1UfFZUczjBEQLe55Q/36bdad1c08381bbacda7450bd7d32003/User-Guide-tslimX2-Control-IQ-7-8-1-Mobile-mmolL-Canada-AW1018620.pdf",
+    "revisionLabel": "Tandem Control-IQ 7.8.1 mmol/L Canada",
+    "language": "English",
+    "pdfPages": 402,
+    "sha256": "4c212570601bbf28e81614a0839f5bbe8e66e3bb27c9e5beecbdb353df99f4e6"
+  }
+]

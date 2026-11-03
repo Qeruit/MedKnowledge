@@ -1,0 +1,11 @@
+* text=auto
+*.py text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.ps1 text eol=lf
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.pdf -text
+*.doc -text
+*.docx -text
+backend/assets/tiktoken/* -text

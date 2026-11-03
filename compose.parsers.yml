@@ -1,0 +1,8 @@
+services:
+  tika:
+    image: apache/tika:3.2.3.0
+    ports:
+      - "127.0.0.1:9998:9998"
+    mem_limit: 512m
+    cpus: 1
+    restart: unless-stopped

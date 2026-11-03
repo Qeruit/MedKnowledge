@@ -1,0 +1,11 @@
+{
+  "title": "Xstim Spine Fusion Stimulator Model 08-0041 - Patient Instructions for Use",
+  "file": "Xstim_P230025D.pdf",
+  "sourceUrl": "https://www.accessdata.fda.gov/cdrh_docs/pdf23/P230025D.pdf",
+  "source": "FDA-hosted manufacturer labeling; Xstim patient IFU",
+  "sha256": "ff318a8954bec55987c996d62264069c3bfaa45e2db7b1ff1c7ac2e2ed2f0f5c",
+  "pdfPages": 21,
+  "language": "English",
+  "review": "Text layer present on all 21 PDF pages. PDF reader produced 21 page-tagged chunks. Visually checked PDF pages 5 and 6 against extracted indication, warning, treatment-duration text.",
+  "limitations": "Figures and diagrams are not interpreted; use the original manufacturer IFU for operation or clinical decisions. Public availability does not imply unrestricted redistribution."
+}
